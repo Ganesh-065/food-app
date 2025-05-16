@@ -1,37 +1,51 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FiCreditCard, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUser } from '../store/slices/authSlice';
-import { useGetCartQuery } from '../api/cartApiSlice';
-import { useCreateOrderMutation } from '../api/checkoutApiSlice';
-import { showNotification } from '../store/slices/uiSlice';
-import CartItem from '../components/CartItem';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiCreditCard, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentUser } from "../store/slices/authSlice";
+import { useGetCartQuery } from "../api/cartApiSlice";
+import { useCreateOrderMutation } from "../api/checkoutApiSlice";
+import { showNotification } from "../store/slices/uiSlice";
+import CartItem from "../components/CartItem";
 
 // Payment method options
 const PAYMENT_METHODS = [
-  { id: 'credit_card', name: 'Credit Card', icon: <FiCreditCard /> },
-  { id: 'paypal', name: 'PayPal', icon: <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal" className="h-5 w-auto" /> },
-  { id: 'cash', name: 'Cash on Delivery', icon: <span className="text-lg">💵</span> },
+  { id: "credit_card", name: "Credit Card", icon: <FiCreditCard /> },
+  {
+    id: "paypal",
+    name: "PayPal",
+    icon: (
+      <img
+        src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg"
+        alt="PayPal"
+        className="h-5 w-auto"
+      />
+    ),
+  },
+  {
+    id: "cash",
+    name: "Cash on Delivery",
+    icon: <span className="text-lg">💵</span>,
+  },
 ];
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
+  // const user = useSelector(selectCurrentUser);
 
   // State for form
-  const [deliveryAddress, setDeliveryAddress] = useState(user?.address || '');
-  const [paymentMethod, setPaymentMethod] = useState('credit_card');
+  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("credit_card");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState("");
 
   // Credit card form state (simplified for demo)
   const [cardDetails, setCardDetails] = useState({
-    number: '',
-    name: '',
-    expiry: '',
-    cvv: '',
+    number: "",
+    name: "",
+    expiry: "",
+    cvv: "",
   });
 
   // Get cart data
@@ -41,13 +55,15 @@ const CheckoutPage = () => {
   const [createOrder, { isLoading: isOrderLoading }] = useCreateOrderMutation();
 
   // Handle input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
-    if (name === 'deliveryAddress') {
+    if (name === "deliveryAddress") {
       setDeliveryAddress(value);
-    } else if (name.startsWith('card_')) {
-      const field = name.replace('card_', '');
+    } else if (name.startsWith("card_")) {
+      const field = name.replace("card_", "");
       setCardDetails((prev) => ({ ...prev, [field]: value }));
     }
   };
@@ -60,20 +76,20 @@ const CheckoutPage = () => {
   // Handle checkout form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError('');
+    setFormError("");
 
     // Validate form
     if (!deliveryAddress.trim()) {
-      setFormError('Please enter your delivery address');
+      setFormError("Please enter your delivery address");
       return;
     }
 
     // Additional validation for credit card
-    if (paymentMethod === 'credit_card') {
+    if (paymentMethod === "credit_card") {
       const { number, name, expiry, cvv } = cardDetails;
 
       if (!number.trim() || !name.trim() || !expiry.trim() || !cvv.trim()) {
-        setFormError('Please fill in all credit card fields');
+        setFormError("Please fill in all credit card fields");
         return;
       }
     }
@@ -90,21 +106,21 @@ const CheckoutPage = () => {
       // Show success notification
       dispatch(
         showNotification({
-          type: 'success',
-          message: 'Order placed successfully! Your food is on the way.',
+          type: "success",
+          message: "Order placed successfully! Your food is on the way.",
         })
       );
 
       // Redirect to home page
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Failed to place order:', error);
-      setFormError('Failed to place your order. Please try again.');
+      console.error("Failed to place order:", error);
+      setFormError("Failed to place your order. Please try again.");
 
       dispatch(
         showNotification({
-          type: 'error',
-          message: 'Failed to place your order. Please try again.',
+          type: "error",
+          message: "Failed to place your order. Please try again.",
         })
       );
     } finally {
@@ -145,9 +161,11 @@ const CheckoutPage = () => {
       <div className="text-center py-12">
         <FiAlertCircle className="text-gray-400 mx-auto mb-4" size={64} />
         <h1 className="text-2xl font-bold mb-4">No items in your cart</h1>
-        <p className="text-gray-600 mb-6">You need to add items to your cart before checkout.</p>
+        <p className="text-gray-600 mb-6">
+          You need to add items to your cart before checkout.
+        </p>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
           className="px-6 py-3 bg-primary text-white rounded-full font-medium"
         >
           Browse Restaurants
@@ -187,8 +205,8 @@ const CheckoutPage = () => {
                     <div
                       className={`flex items-center p-3 border rounded-lg cursor-pointer ${
                         paymentMethod === method.id
-                          ? 'border-primary bg-primary-light'
-                          : 'border-gray-300 hover:border-primary'
+                          ? "border-primary bg-primary-light"
+                          : "border-gray-300 hover:border-primary"
                       }`}
                     >
                       <input
@@ -213,12 +231,15 @@ const CheckoutPage = () => {
             </div>
 
             {/* Credit Card Details (Show only if credit card is selected) */}
-            {paymentMethod === 'credit_card' && (
+            {paymentMethod === "credit_card" && (
               <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                 <h3 className="font-medium mb-3">Card Details</h3>
                 <div className="space-y-3">
                   <div>
-                    <label htmlFor="card_number" className="block text-sm text-gray-600 mb-1">
+                    <label
+                      htmlFor="card_number"
+                      className="block text-sm text-gray-600 mb-1"
+                    >
                       Card Number
                     </label>
                     <input
@@ -233,7 +254,10 @@ const CheckoutPage = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="card_name" className="block text-sm text-gray-600 mb-1">
+                    <label
+                      htmlFor="card_name"
+                      className="block text-sm text-gray-600 mb-1"
+                    >
                       Cardholder Name
                     </label>
                     <input
@@ -249,7 +273,10 @@ const CheckoutPage = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="card_expiry" className="block text-sm text-gray-600 mb-1">
+                      <label
+                        htmlFor="card_expiry"
+                        className="block text-sm text-gray-600 mb-1"
+                      >
                         Expiry Date
                       </label>
                       <input
@@ -264,7 +291,10 @@ const CheckoutPage = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="card_cvv" className="block text-sm text-gray-600 mb-1">
+                      <label
+                        htmlFor="card_cvv"
+                        className="block text-sm text-gray-600 mb-1"
+                      >
                         CVV
                       </label>
                       <input
@@ -295,7 +325,7 @@ const CheckoutPage = () => {
               disabled={isSubmitting || isOrderLoading}
               className="w-full bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-full font-medium disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isSubmitting || isOrderLoading ? 'Processing...' : 'Place Order'}
+              {isSubmitting || isOrderLoading ? "Processing..." : "Place Order"}
             </button>
           </form>
         </div>
