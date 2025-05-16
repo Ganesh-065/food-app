@@ -63,3 +63,5 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
+// start command using js - "start": "nodemon dist/index.js",
