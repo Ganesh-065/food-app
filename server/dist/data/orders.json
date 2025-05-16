@@ -1,0 +1,33 @@
+[
+  {
+    "id": "a994619f-8af3-4633-92db-ffec80657143",
+    "userId": "3a8708e5-aa36-400a-8747-facaa79c53d8",
+    "restaurantId": "2",
+    "items": [
+      {
+        "id": "item2_1",
+        "restaurantId": "2",
+        "name": "Butter Chicken",
+        "price": 16.99,
+        "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+        "quantity": 2
+      },
+      {
+        "id": "item2_3",
+        "restaurantId": "2",
+        "name": "Vegetable Biryani",
+        "price": 13.99,
+        "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+        "quantity": 2
+      }
+    ],
+    "totalItems": 4,
+    "totalPrice": 61.959999999999994,
+    "paymentMethod": "cash",
+    "deliveryAddress": "Hyderabad",
+    "status": "pending",
+    "createdAt": "2025-04-16T10:26:58.977Z",
+    "updatedAt": "2025-04-16T10:26:58.977Z",
+    "estimatedDeliveryTime": 30
+  }
+]

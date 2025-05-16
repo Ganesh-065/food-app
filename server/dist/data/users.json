@@ -1,0 +1,56 @@
+[
+  {
+    "id": "user1",
+    "name": "Michael Johnson",
+    "email": "michael@example.com",
+    "password": "$2b$10$9tLQVdqYihYQFORGGTzuEOxPh9NmHu1ViM1N9avRzfDMPK/jxLcI2",
+    "phone": "555-123-4567",
+    "address": "123 Main St, Apartment 4B, Cityville",
+    "role": "user"
+  },
+  {
+    "id": "user2",
+    "name": "Sarah Williams",
+    "email": "sarah@example.com",
+    "password": "$2b$10$9tLQVdqYihYQFORGGTzuEOxPh9NmHu1ViM1N9avRzfDMPK/jxLcI2",
+    "phone": "555-234-5678",
+    "address": "456 Oak Ave, Suite 7, Townsburg",
+    "role": "user"
+  },
+  {
+    "id": "user3",
+    "name": "David Brown",
+    "email": "david@example.com",
+    "password": "$2b$10$9tLQVdqYihYQFORGGTzuEOxPh9NmHu1ViM1N9avRzfDMPK/jxLcI2",
+    "phone": "555-345-6789",
+    "address": "789 Pine Blvd, Villageton",
+    "role": "user"
+  },
+  {
+    "id": "admin1",
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "$2b$10$9tLQVdqYihYQFORGGTzuEOxPh9NmHu1ViM1N9avRzfDMPK/jxLcI2",
+    "phone": "555-987-6543",
+    "address": "100 Admin Street, Adminville",
+    "role": "admin"
+  },
+  {
+    "id": "3a8708e5-aa36-400a-8747-facaa79c53d8",
+    "name": "Test",
+    "email": "vavega8434@ovobri.com",
+    "password": "$2b$10$Y1jlgFrJEFIdnjn2eiAgzexKd.Hxf0nbOnB0DfKfYjpfILE9nEYT6",
+    "phone": "",
+    "address": "",
+    "role": "user"
+  },
+  {
+    "id": "f7370468-1c08-4711-8543-18219dc07b81",
+    "name": "P Ganesh",
+    "email": "devganesh12p@gmail.com",
+    "password": "$2b$10$wDvru1.tNUatIirBW8Awh.9BCKB6dLvYdR8PhmOmDmEf2yenqymqW",
+    "phone": "",
+    "address": "",
+    "role": "user"
+  }
+]

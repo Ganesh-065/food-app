@@ -1,0 +1,237 @@
+{
+  "1": [
+    {
+      "id": "item1_1",
+      "name": "Spaghetti Carbonara",
+      "description": "Classic Italian pasta with eggs, cheese, pancetta, and black pepper",
+      "price": 14.99,
+      "image": "https://images.unsplash.com/photo-1588013273468-315fd88ea34c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Pasta",
+      "popular": true
+    },
+    {
+      "id": "item1_2",
+      "name": "Margherita Pizza",
+      "description": "Traditional pizza with tomatoes, mozzarella cheese, and basil",
+      "price": 12.99,
+      "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Pizza",
+      "popular": true
+    },
+    {
+      "id": "item1_3",
+      "name": "Tiramisu",
+      "description": "Classic Italian dessert with coffee-soaked ladyfingers and mascarpone cream",
+      "price": 7.99,
+      "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Dessert",
+      "popular": false
+    },
+    {
+      "id": "item1_4",
+      "name": "Bruschetta",
+      "description": "Grilled bread rubbed with garlic and topped with diced tomatoes, olive oil, and basil",
+      "price": 8.99,
+      "image": "https://images.unsplash.com/photo-1572695157366-7dfca06194ca?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Appetizers",
+      "popular": true
+    },
+    {
+      "id": "item1_5",
+      "name": "Lasagna",
+      "description": "Layers of pasta, ricotta cheese, and hearty meat sauce, baked to perfection",
+      "price": 15.99,
+      "image": "https://images.unsplash.com/photo-1619895092538-128341789043?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Pasta",
+      "popular": true
+    }
+  ],
+  "2": [
+    {
+      "id": "item2_1",
+      "name": "Butter Chicken",
+      "description": "Tender chicken in a rich, creamy tomato sauce with butter and spices",
+      "price": 16.99,
+      "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Main Course",
+      "popular": true
+    },
+    {
+      "id": "item2_2",
+      "name": "Paneer Tikka",
+      "description": "Chunks of cottage cheese marinated in spices and grilled in a tandoor",
+      "price": 14.99,
+      "image": "https://images.unsplash.com/photo-1567188040759-fb8a6a35c4da?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Appetizers",
+      "popular": true
+    },
+    {
+      "id": "item2_3",
+      "name": "Vegetable Biryani",
+      "description": "Fragrant basmati rice cooked with mixed vegetables and aromatic spices",
+      "price": 13.99,
+      "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Rice",
+      "popular": false
+    },
+    {
+      "id": "item2_4",
+      "name": "Garlic Naan",
+      "description": "Soft flatbread topped with garlic and butter, baked in a tandoor",
+      "price": 3.99,
+      "image": "https://images.unsplash.com/photo-1626237152253-74363e3a918a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Bread",
+      "popular": true
+    },
+    {
+      "id": "item2_5",
+      "name": "Gulab Jamun",
+      "description": "Soft, spongy milk solids balls soaked in rose-flavored sugar syrup",
+      "price": 5.99,
+      "image": "https://images.unsplash.com/photo-1601303516342-9d53336a169b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Dessert",
+      "popular": true
+    }
+  ],
+  "3": [
+    {
+      "id": "item3_1",
+      "name": "Sashimi Deluxe",
+      "description": "Assortment of premium raw fish, artfully sliced",
+      "price": 24.99,
+      "image": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Sashimi",
+      "popular": true
+    },
+    {
+      "id": "item3_2",
+      "name": "Dragon Roll",
+      "description": "Eel and cucumber inside, avocado and tobiko on top",
+      "price": 16.99,
+      "image": "https://images.unsplash.com/photo-1617196034183-421b4917c92d?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Rolls",
+      "popular": true
+    },
+    {
+      "id": "item3_3",
+      "name": "Miso Soup",
+      "description": "Traditional Japanese soup with tofu, seaweed, and green onions",
+      "price": 4.99,
+      "image": "https://images.unsplash.com/photo-1583110130767-4495486cedae?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Soup",
+      "popular": false
+    },
+    {
+      "id": "item3_4",
+      "name": "Tempura Udon",
+      "description": "Thick noodles in a savory broth with crispy tempura shrimp and vegetables",
+      "price": 15.99,
+      "image": "https://images.unsplash.com/photo-1618841557871-b4664b1a8f3a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Noodles",
+      "popular": true
+    },
+    {
+      "id": "item3_5",
+      "name": "Matcha Ice Cream",
+      "description": "Creamy green tea flavored ice cream",
+      "price": 6.99,
+      "image": "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Dessert",
+      "popular": false
+    }
+  ],
+  "4": [
+    {
+      "id": "item4_1",
+      "name": "Classic Cheeseburger",
+      "description": "Juicy beef patty with American cheese, lettuce, tomato, and special sauce",
+      "price": 9.99,
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Burgers",
+      "popular": true
+    },
+    {
+      "id": "item4_2",
+      "name": "Loaded Fries",
+      "description": "Crispy fries topped with cheese, bacon, sour cream, and green onions",
+      "price": 7.99,
+      "image": "https://images.unsplash.com/photo-1585109649139-366815a0d713?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Sides",
+      "popular": true
+    },
+    {
+      "id": "item4_3",
+      "name": "Chocolate Milkshake",
+      "description": "Thick and creamy milkshake made with premium chocolate ice cream",
+      "price": 5.99,
+      "image": "https://images.unsplash.com/photo-1553787499-6f9133860278?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Drinks",
+      "popular": true
+    },
+    {
+      "id": "item4_4",
+      "name": "Onion Rings",
+      "description": "Crispy battered onion rings served with dipping sauce",
+      "price": 5.99,
+      "image": "https://images.unsplash.com/photo-1639024471283-03518883512d?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Sides",
+      "popular": false
+    },
+    {
+      "id": "item4_5",
+      "name": "Double Bacon Burger",
+      "description": "Two beef patties with extra bacon, cheddar cheese, and BBQ sauce",
+      "price": 14.99,
+      "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Burgers",
+      "popular": true
+    }
+  ],
+  "5": [
+    {
+      "id": "item5_1",
+      "name": "Street Tacos",
+      "description": "Three soft corn tortillas with your choice of meat, onion, and cilantro",
+      "price": 10.99,
+      "image": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Tacos",
+      "popular": true
+    },
+    {
+      "id": "item5_2",
+      "name": "Guacamole & Chips",
+      "description": "Freshly made guacamole with ripe avocados, lime, and spices, served with tortilla chips",
+      "price": 8.99,
+      "image": "https://images.unsplash.com/photo-1600545856362-2e6e5a6f3e32?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Appetizers",
+      "popular": true
+    },
+    {
+      "id": "item5_3",
+      "name": "Chicken Quesadilla",
+      "description": "Flour tortilla filled with grilled chicken and melted cheese, served with sour cream and salsa",
+      "price": 12.99,
+      "image": "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Main Dishes",
+      "popular": true
+    },
+    {
+      "id": "item5_4",
+      "name": "Churros",
+      "description": "Fried dough pastry coated in cinnamon sugar, served with chocolate dipping sauce",
+      "price": 6.99,
+      "image": "https://images.unsplash.com/photo-1624471488755-12b18160df4a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Dessert",
+      "popular": false
+    },
+    {
+      "id": "item5_5",
+      "name": "Beef Burrito",
+      "description": "Large flour tortilla filled with seasoned beef, rice, beans, cheese, and sour cream",
+      "price": 13.99,
+      "image": "https://images.unsplash.com/photo-1584208632869-05fa2b2a5934?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=400",
+      "category": "Main Dishes",
+      "popular": true
+    }
+  ]
+}
