@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173/", // your frontend URL
+    origin: "https://food-app-liart-xi.vercel.app/", // your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true, // if you are using cookies or Authorization headers
   })
