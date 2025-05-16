@@ -29,13 +29,22 @@ const PORT = process.env.PORT || 5000;
 //   })
 // );
 
+const allowedOrigins = ["https://food-app-liart-xi.vercel.app/"];
+
 app.use(
   cors({
-    origin: "https://food-app-liart-xi.vercel.app/", // your frontend URL
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // if you are using cookies or Authorization headers
+    credentials: true, // if you're using cookies/auth
   })
 );
+
 app.options("*", cors()); // 👈 handles OPTIONS requests globally
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
