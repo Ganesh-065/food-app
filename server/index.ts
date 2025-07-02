@@ -19,36 +19,24 @@ config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allow credentials and set origin from env or default
-// const allowedOrigin = "http://localhost:5173";
-const allowedOrigin = process.env.FRONTEND_URL;
+// CORS config for a single allowed frontend origin
+// const allowedOrigin = "http://localhost:5173"; // Default to localhost for local development
+const allowedOrigin = process.env.FRONTEND_URL || "https://food-app-liart-xi.vercel.app";
 
 app.use(
   cors({
-    origin: allowedOrigin,      // Must be exact origin if credentials: true
-    credentials: false,          // Allow cookies/auth headers
+    origin: allowedOrigin,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// const allowedOrigins = ["https://food-app-liart-xi.vercel.app/", "http://localhost:5173"];
-
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     credentials: true, // if you're using cookies/auth
-//   })
-// );
-
-app.options("*", cors()); // Handle preflight OPTIONS requests
+// Handle preflight OPTIONS requests globally
+app.options("*", cors({
+  origin: allowedOrigin,
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,6 +50,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/checkout", checkoutRoutes);
 app.use("/api/reviews", reviewRoutes);
 
+// Health check
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "Server is running" });
 });
