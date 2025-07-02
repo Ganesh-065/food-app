@@ -1,24 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
-// Define base API slice
+// ✅ CRA requires REACT_APP_ prefix for frontend env vars
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+if (!API_URL) {
+  throw new Error("Missing REACT_APP_BACKEND_URL environment variable");
+} else {
+  console.log("API URL:", API_URL);
+}
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://localhost:5000/api",
-    baseUrl: process.env.NEXT_PUBLIC_FOOD_APP_BACKEND_URL,
+    // baseUrl: "http://localhost:5000/api", // Fallback for local development
+    baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
-      // Get token from auth state
       const token = (getState() as RootState).auth.token;
 
-      // If token exists, add authorization header
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
 
       return headers;
     },
-    credentials: "include", // Include cookies in requests
+    credentials: "include",
   }),
   tagTypes: [
     "Restaurants",
