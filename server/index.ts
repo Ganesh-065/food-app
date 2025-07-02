@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 5000;
 //   })
 // );
 
-const allowedOrigins = ["https://food-app-liart-xi.vercel.app/"];
+const allowedOrigins = ["https://food-app-liart-xi.vercel.app/", "http://localhost:5173"];
 
 app.use(
   cors({

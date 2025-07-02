@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon index.ts",
-    "dev": "ts-node-dev --respawn --transpile-only index.ts"
+    "dev:backend": "ts-node-dev --respawn --transpile-only index.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
