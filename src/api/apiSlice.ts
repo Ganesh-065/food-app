@@ -6,7 +6,7 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:5000/api",
-    baseUrl: process.env.FOOD_APP_BACKEND_URL || "http://localhost:5000/api",
+    baseUrl: process.env.FOOD_APP_BACKEND_URL,
     prepareHeaders: (headers, { getState }) => {
       // Get token from auth state
       const token = (getState() as RootState).auth.token;
