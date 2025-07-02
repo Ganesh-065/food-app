@@ -26,7 +26,7 @@ const allowedOrigin = process.env.FRONTEND_URL;
 app.use(
   cors({
     origin: allowedOrigin,      // Must be exact origin if credentials: true
-    credentials: true,          // Allow cookies/auth headers
+    credentials: false,          // Allow cookies/auth headers
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
