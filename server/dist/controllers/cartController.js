@@ -16,7 +16,7 @@ exports.clearCart = exports.removeFromCart = exports.updateCartItem = exports.ad
 const errorHandler_1 = require("../middleware/errorHandler");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const uuid_1 = require("uuid");
+const Cart_1 = __importDefault(require("../models/Cart"));
 // Path to store cart data (in a real app, this would be in a database)
 const cartFilePath = path_1.default.join(__dirname, '../data/carts.json');
 // Initialize carts file if it doesn't exist
@@ -43,96 +43,58 @@ const saveCarts = (carts) => {
 // Get user's cart
 exports.getCart = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        res.status(401).json({
-            status: 'fail',
-            message: 'Please log in to access your cart'
-        });
-        return;
+        return res.status(401).json({ status: 'fail', message: 'Please log in to access your cart' });
     }
     const userId = req.user.id;
-    const carts = loadCarts();
-    // If user doesn't have a cart yet, create an empty one
-    if (!carts[userId]) {
-        carts[userId] = {
-            id: (0, uuid_1.v4)(),
+    let cart = yield Cart_1.default.findOne({ userId });
+    if (!cart) {
+        cart = yield Cart_1.default.create({
             userId,
             items: [],
             totalItems: 0,
             totalPrice: 0
-        };
-        saveCarts(carts);
+        });
     }
-    res.status(200).json({
-        status: 'success',
-        data: carts[userId]
-    });
+    res.status(200).json({ status: 'success', data: cart });
 }));
 // Add item to cart
 exports.addToCart = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        res.status(401).json({
-            status: 'fail',
-            message: 'Please log in to add items to your cart'
-        });
-        return;
+        return res.status(401).json({ status: 'fail', message: 'Please log in to add items to your cart' });
     }
     const { restaurantId, itemId, quantity } = req.body;
     if (!restaurantId || !itemId || !quantity) {
-        res.status(400).json({
-            status: 'fail',
-            message: 'Please provide restaurantId, itemId, and quantity'
-        });
-        return;
+        return res.status(400).json({ status: 'fail', message: 'Please provide restaurantId, itemId, and quantity' });
     }
-    // Find item in menus
     const menu = menusData[restaurantId];
     if (!menu) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Restaurant not found'
-        });
-        return;
+        return res.status(404).json({ status: 'fail', message: 'Restaurant not found' });
     }
     const menuItem = menu.find((item) => item.id === itemId);
     if (!menuItem) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Menu item not found'
-        });
-        return;
+        return res.status(404).json({ status: 'fail', message: 'Menu item not found' });
     }
     const userId = req.user.id;
-    const carts = loadCarts();
-    // If user doesn't have a cart yet, create one
-    if (!carts[userId]) {
-        carts[userId] = {
-            id: (0, uuid_1.v4)(),
+    let cart = yield Cart_1.default.findOne({ userId });
+    if (!cart) {
+        cart = new Cart_1.default({
             userId,
             items: [],
             totalItems: 0,
             totalPrice: 0
-        };
+        });
     }
-    const cart = carts[userId];
-    // Check if item from the same restaurant
-    if (cart.items.length > 0) {
-        const existingRestaurantId = cart.items[0].restaurantId;
-        if (existingRestaurantId !== restaurantId) {
-            res.status(400).json({
-                status: 'fail',
-                message: 'Cannot add items from different restaurants to the same cart'
-            });
-            return;
-        }
+    if (cart.items.length > 0 && cart.items[0].restaurantId !== restaurantId) {
+        return res.status(400).json({
+            status: 'fail',
+            message: 'Cannot add items from different restaurants to the same cart'
+        });
     }
-    // Check if item already in cart
-    const existingItemIndex = cart.items.findIndex((item) => item.id === itemId);
-    if (existingItemIndex !== -1) {
-        // Update quantity if item already exists
-        cart.items[existingItemIndex].quantity += quantity;
+    const existingItem = cart.items.find((item) => item.id === itemId);
+    if (existingItem) {
+        existingItem.quantity += quantity;
     }
     else {
-        // Add new item
         cart.items.push({
             id: itemId,
             restaurantId,
@@ -142,151 +104,71 @@ exports.addToCart = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(voi
             quantity
         });
     }
-    // Update cart totals
     cart.totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
-    cart.totalPrice = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    // Save updated carts
-    saveCarts(carts);
-    res.status(200).json({
-        status: 'success',
-        data: cart
-    });
+    cart.totalPrice = cart.items.reduce((total, item) => total + item.quantity * item.price, 0);
+    yield cart.save();
+    res.status(200).json({ status: 'success', data: cart });
 }));
 // Update cart item quantity
 exports.updateCartItem = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        res.status(401).json({
-            status: 'fail',
-            message: 'Please log in to update your cart'
-        });
-        return;
+        return res.status(401).json({ status: 'fail', message: 'Please log in to update your cart' });
     }
     const { itemId, quantity } = req.body;
     if (!itemId || quantity === undefined) {
-        res.status(400).json({
-            status: 'fail',
-            message: 'Please provide itemId and quantity'
-        });
-        return;
+        return res.status(400).json({ status: 'fail', message: 'Please provide itemId and quantity' });
     }
-    const userId = req.user.id;
-    const carts = loadCarts();
-    // Check if user has a cart
-    if (!carts[userId]) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Cart not found'
-        });
-        return;
+    const cart = yield Cart_1.default.findOne({ userId: req.user.id });
+    if (!cart) {
+        return res.status(404).json({ status: 'fail', message: 'Cart not found' });
     }
-    const cart = carts[userId];
-    // Find item in cart
-    const itemIndex = cart.items.findIndex((item) => item.id === itemId);
-    if (itemIndex === -1) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Item not found in cart'
-        });
-        return;
+    const item = cart.items.find((item) => item.id === itemId);
+    if (!item) {
+        return res.status(404).json({ status: 'fail', message: 'Item not found in cart' });
     }
     if (quantity <= 0) {
-        // Remove item if quantity is 0 or negative
-        cart.items.splice(itemIndex, 1);
+        cart.items = cart.items.filter((item) => item.id !== itemId);
     }
     else {
-        // Update quantity
-        cart.items[itemIndex].quantity = quantity;
+        item.quantity = quantity;
     }
-    // Update cart totals
-    cart.totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
-    cart.totalPrice = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    // Save updated carts
-    saveCarts(carts);
-    res.status(200).json({
-        status: 'success',
-        data: cart
-    });
+    cart.totalItems = cart.items.reduce((sum, i) => sum + i.quantity, 0);
+    cart.totalPrice = cart.items.reduce((sum, i) => sum + i.quantity * i.price, 0);
+    yield cart.save();
+    res.status(200).json({ status: 'success', data: cart });
 }));
 // Remove item from cart
 exports.removeFromCart = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        res.status(401).json({
-            status: 'fail',
-            message: 'Please log in to update your cart'
-        });
-        return;
+        return res.status(401).json({ status: 'fail', message: 'Please log in to update your cart' });
     }
     const { itemId } = req.params;
-    if (!itemId) {
-        res.status(400).json({
-            status: 'fail',
-            message: 'Please provide itemId'
-        });
-        return;
+    const cart = yield Cart_1.default.findOne({ userId: req.user.id });
+    if (!cart) {
+        return res.status(404).json({ status: 'fail', message: 'Cart not found' });
     }
-    const userId = req.user.id;
-    const carts = loadCarts();
-    // Check if user has a cart
-    if (!carts[userId]) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Cart not found'
-        });
-        return;
+    const itemExists = cart.items.some((item) => item.id === itemId);
+    if (!itemExists) {
+        return res.status(404).json({ status: 'fail', message: 'Item not found in cart' });
     }
-    const cart = carts[userId];
-    // Find item in cart
-    const itemIndex = cart.items.findIndex((item) => item.id === itemId);
-    if (itemIndex === -1) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Item not found in cart'
-        });
-        return;
-    }
-    // Remove item
-    cart.items.splice(itemIndex, 1);
-    // Update cart totals
-    cart.totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
-    cart.totalPrice = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    // Save updated carts
-    saveCarts(carts);
-    res.status(200).json({
-        status: 'success',
-        data: cart
-    });
+    cart.items = cart.items.filter((item) => item.id !== itemId);
+    cart.totalItems = cart.items.reduce((sum, i) => sum + i.quantity, 0);
+    cart.totalPrice = cart.items.reduce((sum, i) => sum + i.quantity * i.price, 0);
+    yield cart.save();
+    res.status(200).json({ status: 'success', data: cart });
 }));
 // Clear cart
 exports.clearCart = (0, errorHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        res.status(401).json({
-            status: 'fail',
-            message: 'Please log in to clear your cart'
-        });
-        return;
+        return res.status(401).json({ status: 'fail', message: 'Please log in to clear your cart' });
     }
-    const userId = req.user.id;
-    const carts = loadCarts();
-    // Check if user has a cart
-    if (!carts[userId]) {
-        res.status(404).json({
-            status: 'fail',
-            message: 'Cart not found'
-        });
-        return;
+    const cart = yield Cart_1.default.findOne({ userId: req.user.id });
+    if (!cart) {
+        return res.status(404).json({ status: 'fail', message: 'Cart not found' });
     }
-    // Reset cart
-    carts[userId] = {
-        id: carts[userId].id,
-        userId,
-        items: [],
-        totalItems: 0,
-        totalPrice: 0
-    };
-    // Save updated carts
-    saveCarts(carts);
-    res.status(200).json({
-        status: 'success',
-        data: carts[userId]
-    });
+    cart.items = [];
+    cart.totalItems = 0;
+    cart.totalPrice = 0;
+    yield cart.save();
+    res.status(200).json({ status: 'success', data: cart });
 }));

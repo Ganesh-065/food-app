@@ -13,6 +13,7 @@ import reviewRoutes from "./routes/reviews";
 
 // Middleware
 import { errorHandler } from "./middleware/errorHandler";
+import mongoose from 'mongoose';
 
 config();
 
@@ -20,8 +21,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS config for a single allowed frontend origin
-// const allowedOrigin = "http://localhost:5173"; // Default to localhost for local development
-const allowedOrigin = process.env.FRONTEND_URL || "https://food-app-liart-xi.vercel.app";
+const allowedOrigin = "http://localhost:5173"; // Default to localhost for local development
+// const allowedOrigin = process.env.FRONTEND_URL || "https://food-app-liart-xi.vercel.app";
+
+const mongoURI = process.env.MONGO_URI;
+
+if (!mongoURI) {
+  throw new Error("MONGO_URI is not defined in the environment variables.");
+}
+
+mongoose.connect(mongoURI)
+.then(() => console.log('MongoDB connected'))
+.catch((err) => console.error('MongoDB connection error:', err));
 
 app.use(
   cors({

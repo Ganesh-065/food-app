@@ -13,8 +13,8 @@ if (!API_URL) {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://localhost:5000/api", // Fallback for local development
-    baseUrl: API_URL,
+    baseUrl: "http://localhost:5000/api", // Fallback for local development
+    // baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
 
